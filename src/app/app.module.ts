@@ -9,6 +9,9 @@ import {
   ProductsComponent,
   ProductComponent,
 } from './components';
+import { CartComponent } from './cart/cart.component';
+import { AppRoutingModule } from './app-routing.module';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -17,9 +20,11 @@ import {
     ProductComponent,
     ProductsComponent,
     ItemsPipe,
+    CartComponent,
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     RouterModule.forRoot(
       [
         {
@@ -31,8 +36,12 @@ import {
         initialNavigation: 'enabledNonBlocking',
       }
     ),
+    AppRoutingModule,
   ],
-  providers: [CartService, ProductService],
+  providers: [CartService, {
+    provide: ProductService,
+    deps: [HttpClient]
+  }, ProductService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
